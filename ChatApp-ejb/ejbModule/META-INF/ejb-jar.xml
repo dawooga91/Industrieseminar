@@ -9,7 +9,7 @@
 		<session>
 			<ejb-name>PasswordHandlerBean</ejb-name>
 			<env-entry>
-				<env-entry-name>methode</env-entry-name>
+				<env-entry-name>hashMethode</env-entry-name>
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>SHA-1</env-entry-value>
 			</env-entry>

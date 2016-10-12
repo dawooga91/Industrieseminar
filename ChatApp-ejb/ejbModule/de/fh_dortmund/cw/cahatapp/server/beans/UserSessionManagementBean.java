@@ -10,7 +10,8 @@ import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementLocal;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementLocal;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementRemote;
 import de.fh_dortmund.cw.chatapp.server.entities.User;
-
+import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
+import de.fh_dortmund.cw.chatapp.server.exception.LogoutException;
 
 @Stateful
 public class UserSessionManagementBean implements UserSessionManagementLocal, UserSessionManagementRemote {
@@ -27,21 +28,11 @@ public class UserSessionManagementBean implements UserSessionManagementLocal, Us
 	}
 
 	@Override
-	public void login(String name, String password) {
-		userManagement.login(name, password); // Add to OnlineUser
-		
-		online=true;
-		user.setUsername(name);
-		user.setPassword(password);
-
-	}
-
-	@Override
 	public void logout() {
 
 		// Remove this user from OnlineList
-		if(online)
-		userManagement.logout(user);
+		if (online)
+			userManagement.logout(user);
 
 		disconnect();
 
@@ -59,6 +50,30 @@ public class UserSessionManagementBean implements UserSessionManagementLocal, Us
 		return user.getUsername();
 	}
 
-	
+	@Override
+	public void changePassword(String oldPassword, String newPassword) {
+		userManagement.changePasswort(user, newPassword);
+
+	}
+
+	@Override
+	public void delete(String password) throws LogoutException {
+		if (password.equals(user.getPassword())) {
+			userManagement.delete(user);
+			logout();
+			
+		}
+
+	}
+
+	@Override
+	public void login(String name, String password) throws LoginException {
+		userManagement.login(name, password); // Add to OnlineUser
+
+		online = true;
+		user.setUsername(name);
+		user.setPassword(password);
+
+	}
 
 }

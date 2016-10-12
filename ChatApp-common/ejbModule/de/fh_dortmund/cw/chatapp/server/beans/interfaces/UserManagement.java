@@ -2,8 +2,6 @@ package de.fh_dortmund.cw.chatapp.server.beans.interfaces;
 
 import java.util.List;
 
-import de.fh_dortmund.cw.chatapp.server.entities.User;
-
 public interface UserManagement {
 
 	public List<String> getOnlineUsers();

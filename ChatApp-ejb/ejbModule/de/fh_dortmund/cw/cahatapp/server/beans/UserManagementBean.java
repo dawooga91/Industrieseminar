@@ -2,6 +2,7 @@ package de.fh_dortmund.cw.cahatapp.server.beans;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
@@ -25,16 +26,16 @@ public class UserManagementBean implements UserManagementLocal, UserManagementRe
 	@PostConstruct
 	private void init() {
 		users = new LinkedHashMap<Long, User>();
+		onlineUsers= new ArrayList<>();
 	}
 
 	@Lock(LockType.READ)
 	@Override
-	public String[] getOnlineUsers() {
-		String[] ret = new String[onlineUsers.size()];
-		int i = 0;
+	public List<String> getOnlineUsers() {
+		
+		List<String> ret= new ArrayList<>();
 		for (User user : onlineUsers) {
-			ret[i] = user.getUsername();
-			i++;
+			ret.add(user.getUsername());
 		}
 
 		return ret;
@@ -56,7 +57,7 @@ public class UserManagementBean implements UserManagementLocal, UserManagementRe
 
 	@Lock(LockType.WRITE)
 	@Override
-	public void register(String name, String password) {
+	public void register(String name, String password) throws IllegalArgumentException {
 
 		if (name == null) {
 			throw new IllegalArgumentException("Username cannot be null");

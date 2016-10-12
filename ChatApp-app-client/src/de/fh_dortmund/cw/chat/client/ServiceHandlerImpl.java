@@ -6,6 +6,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import de.fh_dortmund.cw.chatapp.server.beans.interfaces.PasswordHandlerRemote;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementRemote;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementRemote;
 import de.fh_dortmund.inf.cw.chat.client.shared.ServiceHandler;
@@ -18,6 +19,7 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 	private UserManagementRemote userManagement;
 
 	private static ServiceHandlerImpl instance;
+	private PasswordHandlerRemote passwordHandler;
 
 	private ServiceHandlerImpl() {
 
@@ -27,6 +29,7 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 					"java:global/ChatApp-ear/ChatApp-ejb/UserSessionManagementBean!de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementRemote");
 			userManagement = (UserManagementRemote) ctx.lookup(
 					"java:global/ChatApp-ear/ChatApp-ejb/UserManagementBean!de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementRemote");
+			passwordHandler = (PasswordHandlerRemote) ctx.lookup("java:global/ChatApp-ear/ChatApp-ejb/PasswordHandlerBean!de.fh_dortmund.cw.chatapp.server.beans.interfaces.PasswordHandlerRemote");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,13 +46,13 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 
 	@Override
 	public void changePassword(String oldPassword, String newPassword) throws Exception {
-		sessionManagement.changePassword( oldPassword,  newPassword);
+		sessionManagement.changePassword( passwordHandler.getHashPassword(oldPassword),  passwordHandler.getHashPassword(newPassword));
 		
 	}
 
 	@Override
 	public void delete(String password) throws Exception {
-	sessionManagement.delete(password);
+	sessionManagement.delete(passwordHandler.getHashPassword(password));
 	}
 
 	@Override
@@ -79,7 +82,7 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 
 	@Override
 	public void login(String username, String password) throws Exception {
-		sessionManagement.login(username, password);
+		sessionManagement.login(username, passwordHandler.getHashPassword(password));
 	}
 
 	@Override
