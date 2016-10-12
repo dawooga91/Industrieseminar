@@ -92,7 +92,9 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 
 	@Override
 	public void register(String name, String password) throws Exception {
-		userManagement.register(name, password);
+		
+System.out.println(userManagement+"---");
+		userManagement.register(name,passwordHandler.getHashPassword(password));
 	}
 
 }

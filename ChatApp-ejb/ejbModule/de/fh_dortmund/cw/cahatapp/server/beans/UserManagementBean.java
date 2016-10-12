@@ -14,6 +14,7 @@ import javax.ejb.Startup;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementLocal;
 import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementRemote;
 import de.fh_dortmund.cw.chatapp.server.entities.User;
+import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
 
 @Singleton
 @Startup
@@ -91,7 +92,7 @@ public class UserManagementBean implements UserManagementLocal, UserManagementRe
 
 	@Lock(LockType.WRITE)
 	@Override
-	public void login(String name, String password) {
+	public void login(String name, String password) throws LoginException{
 		for (Entry<Long, User> entry : users.entrySet()) {
 
 			if (entry.getValue().getUsername().equals(name)) {
@@ -102,7 +103,7 @@ public class UserManagementBean implements UserManagementLocal, UserManagementRe
 				}
 			}
 		}
-		throw new IllegalArgumentException("Password oder Nutzername sind falsch");
+		throw new LoginException("Password oder Nutzername sind falsch");
 
 	}
 	@Lock(LockType.WRITE)

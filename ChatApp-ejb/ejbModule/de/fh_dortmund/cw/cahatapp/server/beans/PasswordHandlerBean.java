@@ -13,7 +13,7 @@ import de.fh_dortmund.cw.chatapp.server.beans.interfaces.PasswordHandlerRemote;
 @Stateless
 public class PasswordHandlerBean implements PasswordHandlerLocal, PasswordHandlerRemote {
 
-	@Resource(name = "hashmethode")
+	@Resource(name = "hashMethode")
 	String hashmethode;
 
 	@Override
@@ -23,7 +23,8 @@ public class PasswordHandlerBean implements PasswordHandlerLocal, PasswordHandle
 			MessageDigest encoder = MessageDigest.getInstance(hashmethode);
 			hash = String.format("%040x", new BigInteger(1, encoder.digest(password.getBytes())));
 		} catch (NoSuchAlgorithmException e) {
-			hash = null;
+			e.printStackTrace();
+			throw new IllegalArgumentException("Passwordcould compile");
 		}
 		return hash;
 	}
