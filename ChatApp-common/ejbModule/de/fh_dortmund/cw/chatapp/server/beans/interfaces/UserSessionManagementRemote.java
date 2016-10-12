@@ -5,4 +5,6 @@ import javax.ejb.Remote;
 @Remote
 public interface UserSessionManagementRemote extends UserSessionManagement {
 
+	
+
 }
