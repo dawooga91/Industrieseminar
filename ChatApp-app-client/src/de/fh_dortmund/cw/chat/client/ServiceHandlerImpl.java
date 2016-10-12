@@ -1,6 +1,5 @@
 package de.fh_dortmund.cw.chat.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -28,7 +27,6 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 					"java:global/ChatApp-ear/ChatApp-ejb/UserSessionManagementBean!de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementRemote");
 			userManagement = (UserManagementRemote) ctx.lookup(
 					"java:global/ChatApp-ear/ChatApp-ejb/UserManagementBean!de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementRemote");
-			System.out.println("test");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,53 +42,54 @@ public class ServiceHandlerImpl extends ServiceHandler implements UserSessionHan
 	}
 
 	@Override
-	public void changePassword(String arg0, String arg1) throws Exception {
-
+	public void changePassword(String oldPassword, String newPassword) throws Exception {
+		sessionManagement.changePassword( oldPassword,  newPassword);
+		
 	}
 
 	@Override
-	public void delete(String arg0) throws Exception {
-
+	public void delete(String password) throws Exception {
+	sessionManagement.delete(password);
 	}
 
 	@Override
 	public void disconnect() {
-
+		sessionManagement.disconnect();
 	}
 
 	@Override
 	public int getNumberOfOnlineUsers() {
-		return 0;
+		return userManagement.getNumbersOfOnlineUseres();
 	}
 
 	@Override
 	public int getNumberOfRegisteredUsers() {
-		return 0;
+		return userManagement.getNumberOfRegisteredUsers();
 	}
 
 	@Override
 	public List<String> getOnlineUsers() {
-		return new ArrayList(0);
+		return userManagement.getOnlineUsers();
 	}
 
 	@Override
 	public String getUserName() {
-		return "N/A";
+		return sessionManagement.getUsername();
 	}
 
 	@Override
-	public void login(String arg0, String arg1) throws Exception {
-
+	public void login(String username, String password) throws Exception {
+		sessionManagement.login(username, password);
 	}
 
 	@Override
 	public void logout() throws Exception {
-
+		sessionManagement.logout();
 	}
 
 	@Override
-	public void register(String arg0, String arg1) throws Exception {
-
+	public void register(String name, String password) throws Exception {
+		userManagement.register(name, password);
 	}
 
 }
