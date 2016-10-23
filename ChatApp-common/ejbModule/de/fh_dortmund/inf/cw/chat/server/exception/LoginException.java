@@ -1,4 +1,4 @@
-package de.fh_dortmund.cw.chatapp.server.exception;
+package de.fh_dortmund.inf.cw.chat.server.exception;
 
 import javax.ejb.ApplicationException;
 

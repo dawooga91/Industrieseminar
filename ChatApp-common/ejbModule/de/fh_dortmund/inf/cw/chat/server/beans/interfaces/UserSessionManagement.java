@@ -1,7 +1,7 @@
-package de.fh_dortmund.cw.chatapp.server.beans.interfaces;
+package de.fh_dortmund.inf.cw.chat.server.beans.interfaces;
 
-import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
-import de.fh_dortmund.cw.chatapp.server.exception.LogoutException;
+import de.fh_dortmund.inf.cw.chat.server.exception.LoginException;
+import de.fh_dortmund.inf.cw.chat.server.exception.LogoutException;
 
 public interface UserSessionManagement {
 	

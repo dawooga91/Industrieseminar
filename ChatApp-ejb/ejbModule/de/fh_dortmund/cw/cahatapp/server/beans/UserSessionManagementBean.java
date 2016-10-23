@@ -6,12 +6,12 @@ import javax.ejb.Remove;
 import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementLocal;
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementLocal;
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserSessionManagementRemote;
-import de.fh_dortmund.cw.chatapp.server.entities.User;
-import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
-import de.fh_dortmund.cw.chatapp.server.exception.LogoutException;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementLocal;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserSessionManagementLocal;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserSessionManagementRemote;
+import de.fh_dortmund.inf.cw.chat.server.entities.User;
+import de.fh_dortmund.inf.cw.chat.server.exception.LoginException;
+import de.fh_dortmund.inf.cw.chat.server.exception.LogoutException;
 
 @Stateful
 public class UserSessionManagementBean implements UserSessionManagementLocal, UserSessionManagementRemote {

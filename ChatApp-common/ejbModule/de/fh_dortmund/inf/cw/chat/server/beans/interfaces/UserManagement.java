@@ -1,4 +1,4 @@
-package de.fh_dortmund.cw.chatapp.server.beans.interfaces;
+package de.fh_dortmund.inf.cw.chat.server.beans.interfaces;
 
 import java.util.List;
 

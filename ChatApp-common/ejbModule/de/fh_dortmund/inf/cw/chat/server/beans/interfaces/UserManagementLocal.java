@@ -1,9 +1,9 @@
-package de.fh_dortmund.cw.chatapp.server.beans.interfaces;
+package de.fh_dortmund.inf.cw.chat.server.beans.interfaces;
 
 import javax.ejb.Local;
 
-import de.fh_dortmund.cw.chatapp.server.entities.User;
-import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
+import de.fh_dortmund.inf.cw.chat.server.entities.User;
+import de.fh_dortmund.inf.cw.chat.server.exception.LoginException;
 
 @Local
 public interface UserManagementLocal extends UserManagement {

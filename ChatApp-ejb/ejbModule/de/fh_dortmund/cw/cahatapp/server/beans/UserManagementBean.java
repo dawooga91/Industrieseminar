@@ -11,10 +11,10 @@ import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementLocal;
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.UserManagementRemote;
-import de.fh_dortmund.cw.chatapp.server.entities.User;
-import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementLocal;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementRemote;
+import de.fh_dortmund.inf.cw.chat.server.entities.User;
+import de.fh_dortmund.inf.cw.chat.server.exception.LoginException;
 
 @Singleton
 @Startup

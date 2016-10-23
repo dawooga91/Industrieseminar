@@ -1,4 +1,4 @@
-package de.fh_dortmund.cw.chatapp.server.entities;
+package de.fh_dortmund.inf.cw.chat.server.entities;
 
 import java.io.Serializable;
 

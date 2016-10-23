@@ -7,8 +7,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.PasswordHandlerLocal;
-import de.fh_dortmund.cw.chatapp.server.beans.interfaces.PasswordHandlerRemote;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.PasswordHandlerLocal;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.PasswordHandlerRemote;
 
 @Stateless
 public class PasswordHandlerBean implements PasswordHandlerLocal, PasswordHandlerRemote {
