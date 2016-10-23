@@ -16,5 +16,5 @@ public interface UserManagementLocal extends UserManagement {
 
 	public void logout(User user);
 
-	void changePasswort(User user, String password);
+	public void changePasswort(User user, String password);
 }
