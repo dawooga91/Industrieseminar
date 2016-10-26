@@ -17,14 +17,18 @@ import javax.naming.NamingException;
 
 import de.fh_dortmund.inf.cw.chat.client.shared.ChatMessageHandler;
 import de.fh_dortmund.inf.cw.chat.client.shared.ServiceHandler;
+import de.fh_dortmund.inf.cw.chat.client.shared.StatisticHandler;
 import de.fh_dortmund.inf.cw.chat.client.shared.UserSessionHandler;
 import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.PasswordHandlerRemote;
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.StatisticManagement;
 import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementRemote;
 import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserSessionManagementRemote;
+import de.fh_dortmund.inf.cw.chat.server.entities.CommonStatistic;
+import de.fh_dortmund.inf.cw.chat.server.entities.UserStatistic;
 import de.fh_dortmund.inf.cw.chat.server.shared.ChatMessage;
 
 public class ServiceHandlerImpl extends ServiceHandler
-		implements UserSessionHandler, ChatMessageHandler, MessageListener {
+		implements UserSessionHandler, ChatMessageHandler, MessageListener, StatisticHandler {
 
 	private Context ctx;
 	private UserSessionManagementRemote sessionManagement;
@@ -36,6 +40,7 @@ public class ServiceHandlerImpl extends ServiceHandler
 	private Topic observerTopic;
 	private Queue chatQueue;
 	private JMSConsumer chatConsumer;
+	private StatisticManagement statisticManagement;
 
 	private ServiceHandlerImpl() {
 
@@ -47,9 +52,8 @@ public class ServiceHandlerImpl extends ServiceHandler
 					"java:global/ChatApp-ear/ChatApp-ejb/UserManagementBean!de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementRemote");
 			passwordHandler = (PasswordHandlerRemote) ctx.lookup(
 					"java:global/ChatApp-ear/ChatApp-ejb/PasswordHandlerBean!de.fh_dortmund.inf.cw.chat.server.beans.interfaces.PasswordHandlerRemote");
-			initilizeJMSConnection();
+			statisticManagement = (StatisticManagement) ctx.lookup("java:global/ChatApp-ear/ChatApp-ejb/UserStatisticBean!de.fh_dortmund.inf.cw.chat.server.beans.interfaces.StatisticManagementRemote");
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -74,12 +78,14 @@ public class ServiceHandlerImpl extends ServiceHandler
 			// Zum Empfangen
 			observerTopic = (Topic) ctx.lookup("java:global/jms/ObserverTopic");
 			// Zum Senden
+
 			chatQueue = (Queue) ctx.lookup("java:global/jms/ObserverQueue");
-			jmsContext.createConsumer(observerTopic).setMessageListener(this);
 			unregisterConsumer();
 
+			String filter = String.format("%1$s IS NULL OR %1$s = \'%2$s\'", ChatMessage.USER_PROPERTY_ID, getUserName());
+			jmsContext.createConsumer(observerTopic,filter).setMessageListener(this);
+
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -126,7 +132,8 @@ public class ServiceHandlerImpl extends ServiceHandler
 	@Override
 	public void login(String username, String password) throws Exception {
 		sessionManagement.login(username, passwordHandler.getHashPassword(password));
-		registerOnConsumer();
+		initilizeJMSConnection();
+//		registerOnConsumer();
 	}
 
 	@Override
@@ -138,7 +145,6 @@ public class ServiceHandlerImpl extends ServiceHandler
 	@Override
 	public void register(String name, String password) throws Exception {
 
-		System.out.println(userManagement + "---");
 		userManagement.register(name, passwordHandler.getHashPassword(password));
 	}
 
@@ -177,17 +183,16 @@ public class ServiceHandlerImpl extends ServiceHandler
 
 	}
 	
-	private void registerOnConsumer(){
-		if(chatConsumer==null){
-			return;
-		}else{
-			String userName = getUserName();
-			
-			chatConsumer= jmsContext.createConsumer(observerTopic,userName);
-			chatConsumer.setMessageListener(this);
-		}
-		
-	}
+//	private void registerOnConsumer(){
+//		if(chatConsumer!=null){
+//			return;
+//		}else{
+//			String userName = getUserName();
+//			chatConsumer= jmsContext.createConsumer(observerTopic,userName);
+//			chatConsumer.setMessageListener(this);
+//		}
+//		
+//	}
 	
 	public void unregisterConsumer(){
 		if(chatConsumer==null){
@@ -197,6 +202,18 @@ public class ServiceHandlerImpl extends ServiceHandler
 			chatConsumer.close();
 		}
 		chatConsumer=null;
+	}
+
+	@Override
+	public List<CommonStatistic> getStatistics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserStatistic getUserStatistic() {
+		UserStatistic userStatistics = statisticManagement.getUserStatistics(getUserName());
+		return userStatistics;
 	}
 
 }

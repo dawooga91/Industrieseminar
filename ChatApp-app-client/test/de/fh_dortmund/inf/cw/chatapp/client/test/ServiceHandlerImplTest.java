@@ -1,20 +1,19 @@
-package de.fh_dortmund.cw.chat.client.test;
+package de.fh_dortmund.inf.cw.chatapp.client.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.UUID;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import de.fh_dortmund.cw.chat.client.ServiceHandlerImpl;
-import de.fh_dortmund.cw.chatapp.server.exception.LoginException;
-import de.fh_dortmund.cw.chatapp.server.exception.PasswordException;
-import de.fh_dortmund.cw.chatapp.server.exception.RegisterException;
+import de.fh_dortmund.inf.cw.chat.server.exception.LoginException;
+import de.fh_dortmund.inf.cw.chat.server.exception.PasswordException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 

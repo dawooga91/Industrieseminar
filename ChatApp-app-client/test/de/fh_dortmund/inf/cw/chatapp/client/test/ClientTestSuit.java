@@ -1,4 +1,4 @@
-package de.fh_dortmund.cw.chat.client.test;
+package de.fh_dortmund.inf.cw.chatapp.client.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
