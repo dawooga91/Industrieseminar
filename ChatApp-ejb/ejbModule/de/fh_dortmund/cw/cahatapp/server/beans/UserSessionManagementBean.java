@@ -3,7 +3,6 @@ package de.fh_dortmund.cw.cahatapp.server.beans;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
-import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 
 import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.UserManagementLocal;
@@ -41,7 +40,7 @@ public class UserSessionManagementBean implements UserSessionManagementLocal, Us
 	@Remove
 	@Override
 	public void disconnect() {
-
+		userManagement.logout(user);
 	}
 
 	@Override

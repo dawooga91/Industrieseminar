@@ -15,13 +15,18 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import de.fh_dortmund.inf.cw.chat.server.beans.interfaces.StatisticManagementLocal;
 import de.fh_dortmund.inf.cw.chat.server.entities.User;
+import de.fh_dortmund.inf.cw.chat.server.entities.UserStatistic;
 import de.fh_dortmund.inf.cw.chat.server.shared.ChatMessage;
 import de.fh_dortmund.inf.cw.chat.server.shared.ChatMessageType;
 
 @MessageDriven(mappedName = "java:global/jms/ObserverQueue", activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
 public class ChatManagementBean implements MessageListener {
+	@Inject
+	StatisticManagementLocal statisticManagement;
+	
 	@Inject
 	private JMSContext jmsContext;
 
@@ -55,13 +60,15 @@ public class ChatManagementBean implements MessageListener {
 			User sender = new User();
 
 			sender.setUsername(textMessage.getStringProperty("Name"));
+			UserStatistic userStatistic= new UserStatistic();
+			userStatistic.setMessages(1);
+			statisticManagement.updateUserStatistic(sender, userStatistic);
 
 			ChatMessage chatMessage = new ChatMessage(ChatMessageType.TEXT, sender.getUsername(), filteredText,
 					new Date());
 
 			notifyViaObserver(chatMessage);
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
