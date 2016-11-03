@@ -4,25 +4,23 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 //@MappedSuperclass
 @Entity
+
 @Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
-public abstract class Statistic implements Serializable{
+public abstract class Statistic extends BaseEntity implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private long uuid;
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Column(name="id")
+//	private long uuid;
 	
 	@Column(name="logins")
 	private int logins;

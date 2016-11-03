@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+//Die Statistic wird erst nach 60 Minuten abgespeichert desswegen kein konkurierend Klassen
+
 @Entity
 @Table(name="COMMONSTATISTIC")
 @NamedQueries(@NamedQuery( name="GET_ALL_COMMON_STATISTIC", query="Select cs  from CommonStatistic cs"))

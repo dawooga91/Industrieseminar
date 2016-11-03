@@ -206,8 +206,8 @@ public class ServiceHandlerImpl extends ServiceHandler
 
 	@Override
 	public List<CommonStatistic> getStatistics() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return statisticManagement.getStatistics();
 	}
 
 	@Override

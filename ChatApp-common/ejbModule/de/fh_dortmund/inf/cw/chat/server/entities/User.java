@@ -6,9 +6,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,17 +19,14 @@ import javax.persistence.Table;
 	@NamedQuery(name="GET_USER_BY_NAME_PASSWORD", query= "Select u from User u where u.password=:password AND u.username=:username"),
 	@NamedQuery(name = "GET_USER_COUNT", query = "select count(u) from User u"),
 })
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private long oid;
+	
 	
 	@Basic(optional=false)
 	@Column(nullable= false)
@@ -67,9 +61,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public long getOid() {
-		return oid;
-	}
+	
 
 	public UserStatistic getStatistic() {
 		return statistic;
